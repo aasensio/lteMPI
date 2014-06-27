@@ -1,0 +1,11 @@
+'INTENSITY'
+1
+1.0
+1.0
+'ATMOS/collados_hot.atmos'
+'DATA/kurucz_expanded.list'
+'RESULTS/colladosHot.spec'
+5249.5
+5251.5
+0.001
+0.5

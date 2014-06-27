@@ -1,4 +1,4 @@
-lteMPI
-======
+lte_mpi
+=======
 
-MPI synthesis in LTE
+Parallel LTE synthesis
