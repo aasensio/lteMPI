@@ -163,7 +163,7 @@ contains
 		enddo
 
 
-		open(unit=24,file=conf%out_file,action='write',status='replace',form='unformatted')
+		open(unit=24,file=conf%out_file,action='write',status='replace',access='stream')
 		write(24) conf%nchunks
 
 	end subroutine divide_work
