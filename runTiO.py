@@ -3,7 +3,7 @@ import matplotlib.pyplot as pl
 import subprocess
 import pdb
 
-files = ['hsra11.mod.atmos','emaltby11.mod.atmos','mmaltby11.mod.atmos','penumjti11.mod.atmos','cool11.mod.atmos']
+files = ['hsra11.mod.atmos','emaltby11.mod.atmos','mmaltby11.mod.atmos','cool11.mod.atmos']
 
 f = open('oldconf.ini')
 lines = f.readlines()
@@ -18,7 +18,7 @@ for f in files:
 	ff.writelines(lines)
 	ff.close()
 	
-	subprocess.call(["run.py","conf.ini","3"])
+	subprocess.call(["./run.py","conf.ini","3"])
 	
 	lines[10] = "File with model atmosphere = 'ATMOS/semi-empirical/{0}'\n".format(f)
 	lines[11] = "File with linelist = 'DATA/kurucz_plus_tio.list'\n"
@@ -28,4 +28,4 @@ for f in files:
 	ff.writelines(lines)
 	ff.close()
 	
-	subprocess.call(["run.py","conf.ini","3"])
+	subprocess.call(["./run.py","conf.ini","3"])

@@ -1,4 +1,4 @@
-pro genmod, in, out
+pro genmod, in, out, BField=BField
 	openr,2,in
 	c = ''
 	for i = 0, 3 do readf,2,c
@@ -33,17 +33,25 @@ pro genmod, in, out
 	vturb = reform(temp[6,*])
 	vmacro = fltarr(72)
 
-	openw,2,out
-	printf,2,'# Model  cmass   T[K]     ne [cm^-3]    vturb [cm/s]'
+	openw,2,out,width=180
+	printf,2,'# Model  cmass   T[K]     ne [cm^-3]    vturb [cm/s]      B[G]       thetaB[deg]       chiB[deg]'
 	printf,2,"'CMASS'"
+	if (arg_present(BField)) then begin
+		printf,2,"'MAGNETIC'"
+	endif else begin
+		printf,2,"'NONMAGNETIC'"
+	endelse
 	printf,2,'MODIFIED_ABUNDANCES'  ; /NORMAL_ABUNDANCES
 	printf,2,'ABUNDANCE_SCALE'
 	printf,2,abund_scale
 	printf,2,'ABUNDANCE_CHANGE'
 	printf,2,abund
 	printf,2,72
+	B = BField[0,*]
+	thB = BField[1,*]
+	phiB = BField[2,*]
 	for i = 0, 71 do begin
-		printf,2,h[i],T[i],n_e[i],vturb[i],vmacro[i]
+		printf,2,h[i],T[i],n_e[i],vturb[i],vmacro[i],B[i],thB[i],phiB[i]
 	endfor
 
 	close,2

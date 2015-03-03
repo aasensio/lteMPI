@@ -210,7 +210,7 @@ contains
 
 
 ! Read the index to recognize the place to jump from the whole list
-		open(unit=10,file='DATA/kurucz.index',status='old',action='read')
+		open(unit=10,file=trim(adjustl(conf%linelist_file))//'.index',status='old',action='read')
 		found_from = .false.
 		found_to = .false.
 		indexx = 0

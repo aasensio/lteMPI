@@ -11,7 +11,7 @@ pro transform
 		T = a[1,*]
 		Pe = a[2,*]
 		vmic = a[3,*]
-		B = a[4,*]
+		B = a[4,*]		
 		vlos = a[5,*]
 		inclination = a[6,*]
 		azimuth = a[7,*]
@@ -32,6 +32,9 @@ pro transform
 		
 		z = z - hZero
 		
+		B = replicate(2000.d0,n)
+		inclination = replicate(20.d0,n)
+		azimuth = fltarr(n)
 		print, 'Writing file : ', f[i]+'.atmos'
 		openw,2,f[i]+'.atmos',width=132
 		printf, 2, '# Model  x [km]   T[K]     ne [cm^-3]    vturb [cm/s]       B[G]       thetaB[deg]       chiB[deg]'

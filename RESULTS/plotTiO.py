@@ -38,20 +38,33 @@ def readSpec(f):
 	stokes = np.concatenate(stokes)
 	return freq, stokes
 	
-files = ['hsra11.mod.atmos','emaltby11.mod.atmos','mmaltby11.mod.atmos','penumjti11.mod.atmos','cool11.mod.atmos']
+files = ['hsra11.mod.atmos','emaltby11.mod.atmos','mmaltby11.mod.atmos','cool11.mod.atmos']
 
-fig, ax = pl.subplots(nrows=4,ncols=5, figsize=(12,12))
+fig, ax = pl.subplots(nrows=4,ncols=2, figsize=(8,10), sharex=True)
 
 loop = 0
 for f in files:
 	freq, stokes = readSpec(f+'.spec')
+	if (loop == 0):
+		cont = stokes[0,0]
 	
-	for i in range(4):
-		ax[i,loop].plot(freq, stokes[:,i],'b')
+	for i in range(2):
+		ax[loop,i].plot(2.99792458e18/freq-5250.2, stokes[:,3*i] / cont,'b')
 		
 	freq, stokes = readSpec(f+'.tio.spec')
 	
-	for i in range(4):
-		ax[i,loop].plot(freq, stokes[:,i],'r')
+	for i in range(2):
+		ax[loop,i].plot(2.99792458e18/freq-5250.2, stokes[:,3*i] / cont,'r')
 		
-	pdb.set_trace()
+	ax[loop,0].set_title(f)
+	
+	ax[loop,0].set_ylabel(r'I/I$_{QS}$')
+	ax[loop,1].set_ylabel(r'V/I$_{QS}$')
+	ax[loop,0].set_xlabel(r'$\lambda-5250.2$ [$\AA$]')
+	ax[loop,1].set_xlabel(r'$\lambda-5250.2$ [$\AA$]')
+	
+	loop += 1
+	
+		
+pl.tight_layout()
+pl.savefig('TiO.pdf')

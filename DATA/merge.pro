@@ -328,7 +328,6 @@ pro merge_tio, atomic_linelist, mol_linelist, out_linelist
 
 		e_up = Eu
 		j_up = Ju
-		label_up = ''
 		gamma_rad = 0.d0
 		gamm_stark = 0.d0
 		vdw_damp = 0.d0
@@ -348,31 +347,109 @@ pro merge_tio, atomic_linelist, mol_linelist, out_linelist
 		line_str = 0.0
 		autoion = 0.0
 		isot_shift = 0
-
+		
 ; Compute the Lande factors
-; 		if (label_low eq 'X') then L_low = 1.d0
-; 		if (eu eq 'A') then L_low = 0.d0
-; 
-; 		if (el eq 'X') then L_up = 1.d0
-; 		if (el eq 'A') then L_up = 0.d0
-; 
-; 		sigma_up = 0.5d0
-; 		sigma_low = 0.5d0
-; 
-; 		if (iu eq 1) then begin
-; 			N_up = Ju - 0.5d0
-; 		endif else begin
-; 			N_up = Ju + 0.5d0
-; 		endelse
-; 
-; 		if (il eq 1) then begin
-; 			N_low = Jl - 0.5d0
-; 		endif else begin
-; 			N_low = Jl + 0.5d0
-; 		endelse
-
-		lande_up = 0.d0
-		lande_low = 0.d0
+		case (label_low) of
+			'X':  begin
+						L_low = 2.d0
+						Sigma_low = 1.d0
+					end
+			'C':  begin
+						L_low = 2.d0
+						Sigma_low = 1.d0
+					end
+			'c':  begin
+						L_low = 3.d0
+						Sigma_low = 0.d0
+					end
+			'a':  begin
+						L_low = 2.d0
+						Sigma_low = 0.d0
+					end
+			'B':  begin
+						L_low = 1.d0
+						Sigma_low = 1.d0
+					end
+			'A':  begin
+						L_low = 3.d0
+						Sigma_low = 1.d0
+					end
+			'E':  begin
+						L_low = 1.d0
+						Sigma_low = 1.d0
+					end
+			'b':  begin
+						L_low = 1.d0
+						Sigma_low = 0.d0
+					end
+			'd':  begin
+						L_low = 0.d0
+						Sigma_low = 0.d0
+					end
+			else: begin
+						L_low = 0.d0
+						Sigma_low = 0.d0
+					end 
+		endcase
+		
+		case (label_up) of
+			'X':  begin
+						L_up = 2.d0
+						Sigma_up = 1.d0
+					end
+			'C':  begin
+						L_up = 2.d0
+						Sigma_up = 1.d0
+					end
+			'c':  begin
+						L_up = 3.d0
+						Sigma_up = 0.d0
+					end
+			'a':  begin
+						L_up = 2.d0
+						Sigma_up = 0.d0
+					end
+			'B':  begin
+						L_up = 1.d0
+						Sigma_up = 1.d0
+					end
+			'A':  begin
+						L_up = 3.d0
+						Sigma_up = 1.d0
+					end
+			'E':  begin
+						L_up = 1.d0
+						Sigma_up = 1.d0
+					end
+			'b':  begin
+						L_up = 1.d0
+						Sigma_up = 0.d0
+					end
+			'd':  begin
+						L_up = 0.d0
+						Sigma_up = 0.d0
+					end
+			else: begin
+						L_up = 0.d0
+						Sigma_up = 0.d0
+					end 
+		endcase
+				
+		lande_up = (L_up+2.d0*Sigma_up)*(L_up+Sigma_up) / (j_up*(j_up+1.d0))
+		lande_low = (L_low+2.d0*Sigma_low)*(L_low+Sigma_low) / (j_low*(j_low+1.d0))
+				
+		if (abs(lande_up) lt 0.01) then begin
+			lande_up = 0.d0
+		endif
+		
+		if (abs(lande_low) lt 0.01) then begin
+			lande_low = 0.d0
+		endif
+		
+		print, wlength, lande_up, lande_low
+		
+		lande_up = lande_up * 1000
+		lande_low = lande_low * 1000
 
 		if (finite(lande_up) eq 0) then lande_up = 0.d0
 		if (finite(lande_low) eq 0) then lande_low = 0.d0

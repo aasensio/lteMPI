@@ -2,10 +2,10 @@
 1
 1.0
 1.0
-'ATMOS/collados_hot.atmos'
+'ATMOS/KURUCZ/T5000_logg4.0_feh0.0_10G.model'
 'DATA/kurucz_expanded.list'
-'RESULTS/colladosHot.spec'
-5249.5
-5251.5
-0.001
-0.5
+'RESULTS/T5000_logg4.0_feh0.0_10G.spec'
+10000
+25000
+0.01
+500.0

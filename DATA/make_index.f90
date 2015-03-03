@@ -29,7 +29,7 @@ implicit none
 
 		rewind(10)
 
-		open(unit=11,file='kurucz.index',status='replace',action='write')
+		open(unit=11,file=trim(adjustl(infile))//'.index',status='replace',action='write')
 		k = 0
 		do i = 1, nlines
 			read(10,FMT='(F11.4,F7.3,F6.2,F12.3,F6.1,1X,A10,F12.3,F6.1,1X,A10,3F6.2,A4,2I2,I3,F6.3,I3,&
