@@ -1,4 +1,4 @@
-lte_mpi
+lteMPI
 =======
 
 Parallel LTE synthesis
